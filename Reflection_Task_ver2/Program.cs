@@ -1,4 +1,4 @@
-﻿using BL;
+﻿using BLL;
 using DAL;
 
 namespace PL
@@ -7,13 +7,19 @@ namespace PL
     {
         static void Main(string[] args)
         {
-            var EV = new ExcelToObject<Car>("car.xlsx");
+            var EV = new ExcelDataMapper<Car>("car.xlsx");
 
-            
+            (bool validated, string errorMsg) = EV.ValidateColumnHeaders();
 
-            Console.WriteLine(EV.Check().Item1 ? "true" : EV.Check().Item2);
+            if (validated)
+            {
+                Console.WriteLine("Headers validated.");
+                InterActionWithDatabase.UploadData(EV.MapExcelToObjects());
+                Console.WriteLine("Data Uploaded!!.");
+            }
+            else
+                Console.WriteLine(errorMsg);
 
-            EV.UploadToDataBase();
         }
     }
 }
