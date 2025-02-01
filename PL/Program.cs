@@ -7,7 +7,7 @@ namespace PL
     {
         static void Main(string[] args)
         {
-            var EV = new ExcelDataMapper<Car>("car.xlsx");
+            var EV = new ExcelDataMapper<Employee>("emp.xlsx");
 
             (bool validated, string errorMsg) = EV.ValidateColumnHeaders();
 
